@@ -13,7 +13,16 @@ class WeatherTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        let weatherAPI = WeatherAPIClient()
+        let weatherEndpoint = WeatherEndpoint.tenDayForecast(city: "San Francisco", state: "CA")
+        weatherAPI.weather(with: weatherEndpoint) { (either) in
+            switch either {
+            case .value(let forecastText):
+                print(forecastText)
+            case .error(let error):
+                print(error)
+            }
+        }
     }
 
     // MARK: - Table view data source
